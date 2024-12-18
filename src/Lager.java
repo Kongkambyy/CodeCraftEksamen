@@ -20,7 +20,17 @@ public class Lager {
 
     // Metoden tilføjer brugere der registrere sig, til arrayet af users.
     // Hvis registrering er successfuld
-    public static void addPlayerToArray(Player player){
+    public static void addPlayerToArray(Player player) {
+        // Tjek om brugernavnet allerede eksisterer
+        for (Player eksisterendeBruger : users) {
+            if (eksisterendeBruger != null &&
+                    eksisterendeBruger.getUsername().equalsIgnoreCase(player.getUsername())) {
+                System.out.println("\u001B[31mBrugernavnet er allerede i brug!\u001B[0m");
+                return; // Afbryd tilføjelsen
+            }
+        }
+
+        // Tilføj brugeren hvis brugernavnet er unikt
         for (int i = 0 ; i < users.length ; i++){
             if (users[i] == null) {
                 users[i] = player;

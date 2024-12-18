@@ -264,10 +264,10 @@ public class Menu {
                         try {
                             FileHandler.save();
                             printProgressBar("Logger ud");
-                            continueRunning = false;
+                            start();
                         } catch (Exception e) {
                             System.out.println("\u001B[31mFejl ved logout, men logger ud alligevel.\u001B[0m");
-                            continueRunning = false;
+                            start();
                         }
                     }
                     default -> System.out.println("\u001B[31mUgyldigt valg. Prøv igen.\u001B[0m");
@@ -299,7 +299,7 @@ public class Menu {
 
     // Vis en progressbar med animation
     private static void printProgressBar(String message) {
-        System.out.print(message + "[");
+        System.out.print(message + " [");
         // Her printer den "=", 8 gange for at simulere en progressbar
         for (int i = 0; i < 8; i++) {
             System.out.print("=");
