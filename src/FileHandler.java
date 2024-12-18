@@ -78,36 +78,27 @@ public class FileHandler {
                         if (tempPlayer != null) {
                             Inv inv = new Inv();
 
-                            // Split item-detaljer
-                            String[] itemDetails = line.split(",");
+                            // Tilføj tjek for tomme linjer
+                            if (!line.trim().isEmpty()) {
+                                // Split item-detaljer
+                                String[] itemDetails = line.split(",");
 
-                            for (String itemDetail : itemDetails) {
-                                // Split hver item-detalje i ID og stack-størrelse
-                                String[] parts = itemDetail.split(":");
+                                for (String itemDetail : itemDetails) {
+                                    // Split hver item-detalje i ID og stack-størrelse
+                                    String[] parts = itemDetail.split(":");
 
-                                int itemId = Integer.parseInt(parts[0]);
-                                int stackSize = parts.length > 1 ? Integer.parseInt(parts[1]) : 1;
+                                    int itemId = Integer.parseInt(parts[0]);
+                                    int stackSize = parts.length > 1 ? Integer.parseInt(parts[1]) : 1;
 
-                                // Hent original item
-                                Item originalItem = Lager.itemListe[itemId];
+                                    // Hent original item
+                                    Item originalItem = Lager.itemListe[itemId];
 
-                                if (originalItem instanceof Consumable) {
-                                    // Opret consumable med specifik stack-størrelse
-                                    Consumable consumable = ((Consumable) originalItem).createWithStackSize(stackSize);
-
-                                    for (int i = 0; i < inv.getItems().length; i++) {
-                                        if (inv.getItems()[i] == null) {
-                                            inv.getItems()[i] = consumable;
-                                            break;
-                                        }
-                                    }
-                                } else {
-
-                                    for (int i = 0; i < inv.getItems().length; i++) {
-                                        if (inv.getItems()[i] == null) {
-                                            inv.getItems()[i] = originalItem;
-                                            break;
-                                        }
+                                    if (originalItem instanceof Consumable) {
+                                        // Opret consumable med specifik stack-størrelse
+                                        Consumable consumable = ((Consumable) originalItem).createWithStackSize(stackSize);
+                                        inv.addItem(consumable);
+                                    } else {
+                                        inv.addItem(originalItem);
                                     }
                                 }
                             }

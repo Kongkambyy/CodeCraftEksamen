@@ -250,6 +250,7 @@ public class Menu {
                             System.out.println("1. ID");
                             System.out.println("2. Navn");
                             System.out.println("3. Antal");
+                            System.out.println("Indtast en af de følgende muligheder");
                             System.out.println();
 
                             int sorteringsValgMenu = scanner.nextInt();
@@ -297,7 +298,7 @@ public class Menu {
         scanner.nextLine();
     }
 
-    // Vis en progressbar med animation
+    // Viser en progressbar med animation
     private static void printProgressBar(String message) {
         System.out.print(message + " [");
         // Her printer den "=", 8 gange for at simulere en progressbar

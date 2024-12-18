@@ -13,14 +13,28 @@ public class Inv {
     // Denne metode fjerner et specifikt item fra inventory baseret på dets ID
     // Den leder gennem hele inventory efter et item med det givne ID og fjerner det når det findes
     public void deleteItemFromInventory(int itemid) {
-        for (int i = 0 ; i < items.length ; i++) {
-            // Tjekker om der er et item på denne plads OG om det har det ID vi leder efter
+        for (int i = 0; i < items.length; i++) {
             if (items[i] != null && items[i].getId() == itemid) {
-                items[i] = null;
-                System.out.println("Item Blev Fjernet");
+                // Speciel håndtering for Consumables
+                if (items[i] instanceof Consumable) {
+                    Consumable consumable = (Consumable) items[i];
+
+                    // Fjern en fra stack
+                    if (consumable.removeFromStack(1)) {
+                        System.out.println("1 item fjernet fra stakken");
+
+                        // Hvis stakken er tom, fjern hele items[i]
+                        if (consumable.getStackSize() == 0) {
+                            items[i] = null;
+                            System.out.println("Consumable stakken er tom og fjernet");
+                        }
+                    }
+                } else {
+                    // For ikke-Consumables, fjern hele items[i]
+                    items[i] = null;
+                    System.out.println("Item Blev Fjernet");
+                }
                 break;
-            }else {
-                System.out.println("Item Kunne ikke findes!");
             }
         }
     }
